@@ -1,0 +1,8 @@
+#二分查找法
+#关键： 边界
+#  binary_search_solution1 是我自己写的，
+#  1. 注意当key>arr[mid]时：low = mid +1, 当key< arr[mid]时， low=mid-1
+#  2. 判断条件应该是 low<=high，注意等号的情况
+
+
+#binary_search_while 网上的
