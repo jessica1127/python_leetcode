@@ -162,6 +162,7 @@ def partition(array, left, right):
         array[right] = array[left]
     array[left] = tmp
     print "Final Sorted array={}".format(array)
+    print "left====", left
     return left
 
 
