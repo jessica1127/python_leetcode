@@ -24,6 +24,8 @@ class Solution:
         self.quick_sort(A, left, end)
 
 
+
+
 if __name__ == '__main__':
     A = [8, 0, 2, 5, 7]
     s = Solution()
