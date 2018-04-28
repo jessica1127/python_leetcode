@@ -20,7 +20,7 @@
 
 class Solution:
     def matrix_search(self, matrix, target):
-        m = len(matrix)    #n行，m列
+        m = len(matrix)    #m行，n列
         n = len(matrix[0])
         print "m={0}, n={1}".format(m, n)
         low, high = 0, m*n-1

@@ -1,6 +1,7 @@
 #/usr/bin/python
 #coding:utf-8
 '''
+二分查找
 Point 1: 不能用(low+high)//2
 Point 2:  边界判断无等号
 Point 3:  如果key> arr[mid], low = mid +1, 如果key<arr[mid], low = mid -1
