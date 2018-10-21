@@ -8,49 +8,44 @@ class Solution(object):
 		'''
 		'''
 		去掉开头的空格
+		1) 以空格开头的去掉空格
+		2) 以+-号开头的，按照正负数，
+		3) 其他符号，非0-9且非start的，退出循环
 		'''
-		while (s[0] == ' '):
-			s = s[1:]
-		print "000s=", s
-		ans = 0
-		start = True
+		if len(s) == 0 :
+			return 0
 		i = 0
-		negative = False
+		positive = True #正数
+		start = True
+		sigStartFlag = True
+		ans = 0
 		while i < len(s):
-			print "###i=",i,"s[i]=",s[i]
-			if s[i] == '-' and start:
-				negative = True
+			if s[i] != ' ':
 				start = False
+			elif s[i] == ' ' and start:
 				i += 1
-				print "111 i =", i ,", start=",start,", negative=",negative,",s[i]=",s[i]
 				continue
-			elif s[i] == '+' and start:
-				s = s[1:]
-				start = False
-				i += 1 
-				print "222 i =", i ,", start=",start,", negative=",negative,",s[i]=",s[i]
-				continue
-			elif s[i] >= '0' and s[i] <='9':
-				ans = ans*10 + int(s[i])
-				print "333 i =", i ,", start=",start,", negative=",negative,",s[i]=",s[i],",ans=",ans
-				if ans > 214748367 and not negative:
-					return 214748367
-				if ans > 214748368 and negative:
-					return -214748368
-
-			elif not (s[i] >= '0' and s[i] <='9') and not start:
-				#字符出现在中间
-				break
+			elif sigStartFlag:
+				if s[i] == '-':
+					positive = False
+					i += 1
+					sigStartFlag = False
+				elif s[i] == '+':
+					i += 1
+					sigStartFlag = False
+			elif s[i] >= '0' and s[i] <= '9':
+				ans = 10*ans + s[i]
+				if ans > 2147483647 and positive:
+					return 2147483647
+				elif ans > 2147483648 and not positive:
+					return -2147483647
 			else:
-				print "Not a number"
 				break
 			i += 1
-		if not negative:
-			print "444 not negative"
+		if positive:
 			return ans
 		else:
-			print "555 negative"
-			return -1 * ans
+			return -1*ans
 
 
 
@@ -69,4 +64,3 @@ if __name__ == '__main__':
 	print "ret_s3=",ret_s3
 	ret_s4 = so.myAtoi(s4)
 	print "ret_s4=",ret_s4
-
