@@ -11,6 +11,7 @@ class Solution(object):
         start = 0
         d = {}
         for i in range(len(s)):
+            print "s[i]= ",s[i]," d= ",d, " i= ",i
             if s[i] in d and d[s[i]] >= start:
                 start = d[s[i]] + 1
             tmp = i - start + 1

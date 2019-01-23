@@ -1,7 +1,7 @@
 #-*- coding: utf-8
 
 '''
-* 代表匹配0个或者多个前面的字符
+* 代表匹配0个或者多个前面的字符，所以出现*之前必须有字符
 . 代表匹配一个任意字符
 s could be empty and contains only lowercase letters a-z
 p could be empty and contains only lowercase letters a-z, and character like . or *
@@ -9,9 +9,12 @@ p could be empty and contains only lowercase letters a-z, and character like . o
 '''
 
 '''
-思路：递归
-1）如果p的下一个字符是*：如果p和s当前的字符相同或者p当前是., 则p一直往右移动知道p没有出现.或者x*这样的情况，x是指跟s相同的字符
-2）如果p的下一个字符不是*：如果p和s当前的字符相同或者p当前字符是., 则p和s往右移动一个字符，递归
+思路：递归或者DP。
+递归：
+1.如果s[0] == p[0] 或者p[0] == "."记下first_match = True, 否则first_match = False
+2. 继续处理下一个字符，如果下一个字符不为*, 则处理isMatch(s[1:], p[1:])
+3. 如果p[1] == "*",如果first_match匹配， 则继续看isMatch(s[1:], p)是否继续匹配；如果first_match不匹配，由于*可以表示0个字符，则看isMatch(s, p[2:])是否匹配
+
 '''
 
 class Solution(object):
@@ -21,36 +24,20 @@ class Solution(object):
 		type: p str
 		return bool
 		'''
-		sLen = len(s)
-		pLen = len(p)
-		if pLen == 0:
-			return sLen == 0
-		if pLen == 1:
-			if p ==s or p == '.' and sLen == 1:
-				return True
-			else:
-				return False
-		#p的最后一个字符不是* 或者.且不出现在s里面，则return False
-		if p[-1] != '*' or p[-1] != '.' and p[-1] not in s:
-			return False
-		if p[1] != '*':
-			if len(s) > 0 and p[0] == s[0] or p[0] == '.':
-				return self.isMatch(s[1:], p[1:])
-			return False
-
+		if len(s) == 0 and len(p) == 0:
+			return True
+		first_match = False
+		if len(s) > 0 and len(p) > 0 :
+			first_match = p[0] in [s[0], '.']
+		if len(p) >= 2 and p[1] == '*':
+			return (first_match and self.isMatch(s[1:], p)) or self.isMatch(s, p[2:])
 		else:
-			while (len(s) > 0) and p[0] == s[0] or p[0] == '.':
-				if self.isMatch(s, p[2:]):
-					return True
-				s = s[1:]
-			return self.isMatch(s, p[2:])
-
-
+			return first_match and self.isMatch(s[1:], p[1:])
 
 
 if __name__ == '__main__':
-    s = 'abc'
-    p = '*'
+    s = 'aab'
+    p = 'c*a*b'
     so = Solution()
     ret = so.isMatch(s,p)
     print "ret=",ret
