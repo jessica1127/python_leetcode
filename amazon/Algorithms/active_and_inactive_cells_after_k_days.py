@@ -2,7 +2,7 @@
 Reference:https://www.geeksforgeeks.org/active-inactive-cells-k-days/
 '''
 class Solution:
-    def activeAndInactive(self,cells,n,k): 
+    def activeAndInactive(self, cells, n, k): 
         #cells: store current status of cells 
         #n : number of cells
         #k : after k days
@@ -12,7 +12,8 @@ class Solution:
             tmp.append(False)
         for i in range(n):
             tmp[i] = cells[i]
-
+        print "original cells = ", cells
+        print "original tmp = ", tmp
         #Iterator for k days:
         while(k > 0):
             #corner case
